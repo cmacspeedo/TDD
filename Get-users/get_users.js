@@ -1,4 +1,6 @@
 
-Module.export = function getUsers(callback){
-    ;
+module.export = function getUsers(callback){
+    if ( callback != undefined){
+        callback();
+    }
 }

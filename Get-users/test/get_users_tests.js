@@ -8,8 +8,15 @@ chai.use(sinonChai);
 
 var getUsers = require('../get_users.js');
 
-describe('GetUsers Test', function() {
+describe('GetUsers Tests', function() {
     it('Can call getUsers', function() {
-        getUsers();
-    })
+        var spy = sinon.spy();
+        getUsers(spy);
+    });
+
+    it('Calls the callback', function() {
+        var spy = sinon.spy();
+        getUsers.spy;
+        spy.should.have.been.calledOnce;
+    });
 });
