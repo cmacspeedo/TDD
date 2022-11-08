@@ -1,6 +1,7 @@
+var request = require('request');
 
-module.export = function getUsers(callback){
-    if ( callback != undefined){
-        callback();
-    }
+module.exports = function getUsers(callback){
+    request.get('https://www.mysite.com/api/users', function(err, res){
+        callback(JSON.parse(res.body));
+    });
 }

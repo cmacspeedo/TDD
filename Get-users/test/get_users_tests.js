@@ -9,14 +9,32 @@ chai.use(sinonChai);
 var getUsers = require('../get_users.js');
 
 describe('GetUsers Tests', function() {
-    it('Can call getUsers', function() {
-        var spy = sinon.spy();
-        getUsers(spy);
+    var spy;
+
+    this.beforeEach(function() {
+        spy = sinon.spy();
+        sinon.stub(request, 'get').callsFake(function(url, callback){
+            callback({}, {body:'{"users":["user1","user2"]}'});
+        });
     });
 
-    it('Calls the callback', function() {
-        var spy = sinon.spy();
-        getUsers.spy;
+    afterEach(function(){
+        sinon.restore();
+    });
+
+       it('Calls the callback', function() {
+        getUsers(spy);
         spy.should.have.been.calledOnce;
     });
+
+    it('Calls the correct URL', function(){
+        getUsers(spy);
+        request.get.should.have.been.calledWith("https://www.mysite.com/api/users");
+    });
+
+    it('Returns correct data', function() {
+        getUsers(spy);
+        spy.should.have.been.calledWith({users: ['user1', 'user2']});
+    });
 });
+
